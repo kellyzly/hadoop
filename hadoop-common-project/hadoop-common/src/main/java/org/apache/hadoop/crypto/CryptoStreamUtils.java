@@ -27,6 +27,7 @@ import java.nio.ByteBuffer;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Seekable;
+import org.apache.hadoop.util.CleanerUtil;
 
 import com.google.common.base.Preconditions;
 
@@ -36,13 +37,14 @@ public class CryptoStreamUtils {
   
   /** Forcibly free the direct buffer. */
   public static void freeDB(ByteBuffer buffer) {
-    if (buffer instanceof sun.nio.ch.DirectBuffer) {
-      final sun.misc.Cleaner bufferCleaner =
-          ((sun.nio.ch.DirectBuffer) buffer).cleaner();
-      bufferCleaner.clean();
+    if (CleanerUtil.UNMAP_SUPPORTED) {
+      try {
+        CleanerUtil.getCleaner().freeBuffer(buffer);
+      } catch (Exception ignore) {
+      }
     }
   }
-  
+
   /** Read crypto buffer size */
   public static int getBufferSize(Configuration conf) {
     return conf.getInt(HADOOP_SECURITY_CRYPTO_BUFFER_SIZE_KEY, 

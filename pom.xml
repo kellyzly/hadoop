@@ -98,7 +98,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
     <maven-dependency-plugin.version>3.0.1</maven-dependency-plugin.version>
     <maven-enforcer-plugin.version>3.0.0-M1</maven-enforcer-plugin.version>
-    <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
+    <maven-javadoc-plugin.version>3.0.0-M1</maven-javadoc-plugin.version>
     <maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
     <maven-remote-resources-plugin.version>1.5</maven-remote-resources-plugin.version>
     <maven-resources-plugin.version>3.0.1</maven-resources-plugin.version>
@@ -438,9 +438,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
               <maxmemory>1024m</maxmemory>
               <quiet>true</quiet>
               <verbose>false</verbose>
+              <additionalparam>-Xdoclint:none</additionalparam>
               <source>${maven.compile.source}</source>
               <charset>${maven.compile.encoding}</charset>
-              <reportOutputDirectory>${project.build.directory}/site</reportOutputDirectory>
+              <reportOutputDirectory>${project.build.directory}/site
+              </reportOutputDirectory>
               <destDir>hadoop-project/api</destDir>
               <!-- Non-public APIs -->
               <excludePackageNames>org.apache.hadoop.authentication*,org.apache.hadoop.mapreduce.v2.proto,org.apache.hadoop.yarn.proto,org.apache.hadoop.yarn.server*,org.apache.hadoop.yarn.webapp*</excludePackageNames>
