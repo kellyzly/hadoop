@@ -1176,7 +1176,10 @@ public class ContainerLaunch implements Callable<Integer> {
 
     @Override
     public void command(List<String> command) {
-      line("exec /bin/bash -c \"", StringUtils.join(" ", command), "\"");
+      String tmp=StringUtils.join(" ", command);
+      //in order to pass on jdk9 see HADOOP-14984
+      String newCommand = tmp.replace("bin/java","bin/java --add-modules=ALL-SYSTEM");
+      line("exec /bin/bash -c \"", newCommand, "\"");
     }
 
     @Override
